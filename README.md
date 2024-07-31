@@ -46,4 +46,12 @@ https://github.com/dukyoung-highschool/lecture_20240723.git
     - Tailwind CSS IntelliSense
     - ES7 React/Redux/React-Native snippets
    
+# 08월 06일 수업내용
+  - github codespace에서 postman 테스트시
+    - Header에 GITHUB_TOKEN을 전달해야함
+    - codespace의 터미널에서 echo $GITHUB_TOKEN을 입력
+    - X-Github-Token 키에 위 값을 전달
+    - 관련 문서 : https://docs.github.com/ko/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace#finding-the-github_token
+    
+
 
