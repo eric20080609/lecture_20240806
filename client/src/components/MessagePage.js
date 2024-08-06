@@ -32,8 +32,17 @@ const MessagePage = () => {
             </header>
 
             {/* 대화메세지들 표시 */}
-            <section>
-
+            <section className='h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50'>
+                <div className='flex flex-col gap-2 py-2 mx-2'>
+                    <div className={`p-1 py-1 rounded w-fit max-w[280px] md:max-w-sm lg:max-w-md bg-teal-100`}>
+                        <p className='px-2'>상대방 껄껄껄 지껄이는 말...</p>
+                        <p className='text-xs ml-auto w-fit'>오후 12:42</p>
+                    </div>
+                    <div className={`p-1 py-1 rounded w-fit max-w[280px] md:max-w-sm lg:max-w-md ml-auto bg-yellow-200`}>
+                        <p className='px-2'>내가 대답하는 말...</p>
+                        <p className='text-xs ml-auto w-fit'>오후 12:44</p>
+                    </div>
+                </div>                
             </section>
 
             {/* 메세지 보내기 */}
