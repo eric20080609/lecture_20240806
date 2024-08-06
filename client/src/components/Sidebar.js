@@ -7,22 +7,24 @@ import { FiArrowUpLeft } from 'react-icons/fi'
 
 const Sidebar = () => {
   return (
-    <div>
-        <div>
+    <div className='w-full h-full grid grid-cols-[48px,1fr] bg-white'>
+        <div className='bg-slate-100 w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between'>
             <div>
-                <NavLink>
+                <NavLink className={({isActive})=>`w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded ${isActive && "bg-slate-200"}`}>
                     <IoChatbubbleEllipses size={20}/>
                 </NavLink>
-                <div>
+                <div className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
                     <FaUserPlus size={20} />
                 </div>
             </div>
-            <div>
-                <button>
+            <div className='flex flex-col items-center'>
+                <button className='mx-auto'>
                     신
                 </button>
-                <button>
-                    <BiLogOut size={20} />
+                <button className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
+                    <span className='ml-2'>
+                        <BiLogOut size={20} />
+                    </span>
                 </button>
             </div>
         </div>
@@ -36,7 +38,7 @@ const Sidebar = () => {
                     <div className='flex justify-center items-center my-4 text-slate-500'>
                         <FiArrowUpLeft size={50} />
                     </div>
-
+                    <p className='text-lg text-center text-slate-400'>대화를 시작할 사용자를 탐색하세요.</p>
                 </div>
             </div>
         </div>
