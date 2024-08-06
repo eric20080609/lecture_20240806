@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 async function connectDB(){
     try {
         var MONGODB_URI = process.env.MONGODB_URI
-        MONGODB_URI = MONGODB_URI.replace("<password>", encodeURIComponent("sds9050@#!"))
         console.log(MONGODB_URI)
         await mongoose.connect(MONGODB_URI)
 
