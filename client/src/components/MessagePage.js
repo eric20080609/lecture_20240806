@@ -3,7 +3,19 @@ import React from 'react'
 const MessagePage = () => {
     return (
         <div>
-            헉, 원하지 않은 URL입니다.
+            {/* 대화방 헤더 */}
+            <header>
+            </header>
+
+            {/* 대화메세지들 표시 */}
+            <section>
+
+            </section>
+
+            {/* 메세지 보내기 */}
+            <section>
+                
+            </section>
         </div>
     )
 }
