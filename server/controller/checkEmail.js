@@ -9,7 +9,7 @@ async function checkEmail(request,response){
         console.log(`checkEmail:${checkEmail}`)
 
         if(!checkEmail){
-            return response.status(400).json({
+            return response.status(200).json({
                 message : "헉, 너누구야? 없는 계정이거든",
                 error : true
             })
