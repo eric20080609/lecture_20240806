@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const CheckEmailPage = () => {
     const [data, setData] = useState({
         email: "",
     })
+    const navigate = useNavigate()
     const handleOnChange = (e) => {
         const {name, value} = e.target
         setData((preve)=>{
@@ -20,8 +23,12 @@ const CheckEmailPage = () => {
         const URL = `${process.env.REACT_APP_BACKEND_URL}/api/email`
         try{
             const response = await axios.post(URL,data)
-            console.log(response.data.message);
-            
+            toast.success(response.data.message)
+            if (response.data.success){
+                navigate("/password",{
+                    state: response?.data?.data
+                })
+            }            
         }catch(error){
             console.log('error')
         }
@@ -48,6 +55,7 @@ const CheckEmailPage = () => {
                     <button className='bg-primary text-lg px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide'>
                         확인
                     </button>
+                    <p className='my-3 text-center'>New User ? <Link to={"/register"} className='hover:text-primary font-semibold'>Register</Link></p>
                 </form>
             </div>
         </div>

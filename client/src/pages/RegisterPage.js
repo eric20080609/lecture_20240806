@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import uploadFile from '../helpers/uploadFile'
+import toast from 'react-hot-toast'
 
 const Registerpage = () => {
     const [data,setData] = useState({
@@ -10,6 +12,7 @@ const Registerpage = () => {
         profile_pic: ""
     })
     const [uploadPhoto,setUploadPhoto] = useState("")
+    const navigate = useNavigate()
     const hangleOnChange = (e)=>{
         const {name,value} = e.target
         setData((preve)=>{
@@ -32,13 +35,19 @@ const Registerpage = () => {
             }
         })
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
         e.stopPropagation()
         console.log(JSON.stringify(data))
-        const URL = 'https://symmetrical-pancake-q9jgjvw6gqr344v6-8080.app.github.dev:8080/api/register'
-        const response = axios.post(URL,data)
-        console.log(JSON.stringify(response))
+        const URL = `${process.env.REACT_APP_BACKEND_URL}/api/register`
+        try{
+            const response = await axios.post(URL,data)
+            console.log('response',response)
+            toast.success(response.data.message)
+            navigate('/email')
+        }catch(error){
+            toast.error(error.response.data.message || error.message)
+        }
     }
     
     return (

@@ -3,6 +3,7 @@ const router = require('./routes/index')
 const cors = require('cors')
 require('dotenv').config({ path: '.env.local' })
 const connectDB = require('./config/connectDB')
+const cookiesParser = require('cookie-parser')
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
+app.use(cookiesParser())
 app.use('/api', router)
 app.get('/', (req,res)=>{
     res.json({

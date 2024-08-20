@@ -28,9 +28,11 @@ async function registerUser(request, response){
     }
     const user = new UserModel(payload)
     const userSave = await user.save() //실제 몽공DB에 Insert시킴 
-
-    return response.status(201).json({
-        message: "아싸뵤 몽고DB에 저장했다."
+    console.log('userSave',userSave)
+    return response.status(200).json({
+        message: "아싸뵤 몽고DB에 저장했다.",
+        data: userSave,
+        success: true
     })
 }
 
