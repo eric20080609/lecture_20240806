@@ -9,7 +9,7 @@ const app = express()
 
 // CORS허용은 맨위에 존재해야함
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: `${process.env.FRONTEND_URL}`,
     credentials: true
 }))
 app.use(express.json())

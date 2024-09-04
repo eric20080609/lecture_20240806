@@ -1,19 +1,38 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, {useState} from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import {IoChatbubbleEllipses} from 'react-icons/io5'
 import { FaUserPlus } from 'react-icons/fa'
 import { BiLogOut } from 'react-icons/bi'
 import { FiArrowUpLeft } from 'react-icons/fi'
+import axios from 'axios'
+import SearchUser from './SearchUser'
 
 const Sidebar = () => {
+  const navigate = useNavigate()
+  const [openSearchUser,setOpenSearchUser] = useState(false)
+
+  const handleLogout = async() => {
+    //서버를 호출
+    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/logout`
+    console.log('URL',URL)
+    const reponse = await axios({
+      url: URL,
+      withCredentials: true
+    })
+    navigate('/email')
+  }
+  console.log('openSearchUser',openSearchUser)
+  
   return (
-    <div className='w-full h-full grid grid-cols-[48px,1fr] bg-white'>
+    <div
+        style={{backgroundColor:"#fff", fontSize:"20px;"}}
+        className='w-full h-full grid grid-cols-[48px,1fr] bg-white'>
         <div className='bg-slate-100 w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between'>
             <div>
                 <NavLink className={({isActive})=>`w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded ${isActive && "bg-slate-200"}`}>
                     <IoChatbubbleEllipses size={20}/>
                 </NavLink>
-                <div className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
+                <div onClick={()=>setOpenSearchUser(true)} className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
                     <FaUserPlus size={20} />
                 </div>
             </div>
@@ -21,7 +40,7 @@ const Sidebar = () => {
                 <button className='mx-auto'>
                     신
                 </button>
-                <button className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
+                <button className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded' onClick={handleLogout}>
                     <span className='ml-2'>
                         <BiLogOut size={20} />
                     </span>
@@ -42,6 +61,12 @@ const Sidebar = () => {
                 </div>
             </div>
         </div>
+
+        {
+          openSearchUser && (
+            <SearchUser onClose={()=>setOpenSearchUser(false)} />
+          )
+        }
     </div>
   )
 }
