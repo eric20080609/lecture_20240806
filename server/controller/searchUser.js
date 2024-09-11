@@ -3,6 +3,7 @@ const UserModel = require('../models/UserModel')
 const searchUser = async (req,res) => {
   try{
     const { search } = req.body
+    console.log('search',search)
     const query = new RegExp(search,"i","g")
     const user = await UserModel.find({
       "$or": [
