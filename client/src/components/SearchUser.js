@@ -1,27 +1,32 @@
 import { useEffect, useState } from "react"
 import { IoClose, IoSearchOutline } from "react-icons/io5"
 import axios from 'axios'
+import UserSearchCard from './UserSearchCard'
+import Loading from './Loading'
 
 const SearchUser = ({onClose}) => {
   const [search,setSearch] = useState('') // 검색어
+  const [loading, setLoading] = useState(false) //로딩표시여부
   const [searchUser,setSearchUser] = useState([]) //검색결과
 
   // 실제 검색하는 함수만들기
   const handleSearchUser = async() => {
     const URL = `${process.env.REACT_APP_BACKEND_URL}/api/search-user`
     try{
+      setLoading(true)
       const response = await axios.post(URL,{
         search: search
       })
-      // setSearchUser(response.data.data)
       console.log('response.data.data',response.data.data)
-    
+      setSearchUser(response.data.data)    
+      setLoading(false)
     }catch(error){
       console.log('일단 에러났쑤')
     }
   }
 
   useEffect(()=>{
+    console.log('11111')
     handleSearchUser()
   },[search]) 
 
@@ -43,8 +48,30 @@ const SearchUser = ({onClose}) => {
         </div>
 
         {/* 검색결과표시 */}
-        <div>
-          검색결과를 보여주는 로직을 구현하자.
+        <div className='bg-white mt-2 w-full p-4 rounded h-[calc(100vh-160px)] overflow-x-hidden overflow-y-auto scrollbar'>
+          {
+            searchUser.length === 0 && !loading && (
+              <p className='text-center text-slate-500'>검색어에 해당하는 사람이 없습니다.</p>
+            )
+          }
+          {
+            loading && (
+              <p><Loading/></p>
+            )
+          }
+          {
+            searchUser.length !== 0 && !loading && (
+              searchUser.map((user,index)=>{
+                return (
+                  <UserSearchCard
+                    key={user._id}
+                    user={user}
+                    onClose={onClose}
+                  />
+                )
+              })
+            )
+          }
         </div>
       </div>
 

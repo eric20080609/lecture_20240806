@@ -1,11 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import logo from '../assets/kakaotalk_logo.png'
 import Sidebar from '../components/Sidebar'
+import io from 'socket.io-client'
 
 const Home = () => {
     const location = useLocation()
     const basePath = location.pathname === '/'
+
+    useEffect(()=>{
+        console.log('소켓서버랑 연결하러 왔음',localStorage.getItem('token'))
+        // 소켓 서버와 연결
+        const socketConnection = io(process.env.REACT_APP_BACKEND_URL,{
+            auth: {
+                token: localStorage.getItem('token')
+            }
+        })
+        socketConnection.on('onlineUser',(data)=>{
+            // 연결된 사용자들을 서버에서 줬네요. 야호 신난다....
+        })
+        return ()=>{
+            socketConnection.disconnect()
+        }
+    },[]) //빈배열의 랜더링된 이후, 최초 1번만 실행
 
     return (
         <div className='grid lg:grid-cols-[300px,1fr] h-screen max-h-screen'>
