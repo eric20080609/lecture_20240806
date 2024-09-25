@@ -3,11 +3,28 @@ import { Outlet, useLocation } from 'react-router-dom'
 import logo from '../assets/kakaotalk_logo.png'
 import Sidebar from '../components/Sidebar'
 import io from 'socket.io-client'
+import { useDispatch } from 'react-redux'
+import { setOnlineUser} from '../redux/userSlice'
+import axios from 'axios'
 
 const Home = () => {
     const location = useLocation()
     const basePath = location.pathname === '/'
+    const dispatch = useDispatch()
 
+    const fetchUserDetails = async() => {
+        const URL = `${process.env.REACT_APP_BACKEND_URL}/api/user-details`
+        console.log('url', URL) 
+        const response = await axios({
+            url: URL,
+            withCredentials: true
+        })
+        console.log('사용자세부조회',response)
+
+    }
+    useEffect(()=>{
+        fetchUserDetails()
+    },[])
     useEffect(()=>{
         console.log('소켓서버랑 연결하러 왔음',localStorage.getItem('token'))
         // 소켓 서버와 연결
@@ -17,6 +34,8 @@ const Home = () => {
             }
         })
         socketConnection.on('onlineUser',(data)=>{
+            console.log(data)
+            dispatch(setOnlineUser(data))
             // 연결된 사용자들을 서버에서 줬네요. 야호 신난다....
         })
         return ()=>{
